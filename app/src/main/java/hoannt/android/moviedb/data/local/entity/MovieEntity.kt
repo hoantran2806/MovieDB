@@ -10,6 +10,8 @@ import com.google.gson.annotations.SerializedName
 data class MovieEntity(
 
     var budget: Double,
+    var page: Long,
+    var totalPages: Long,
 //    @TypeConverters(GenresConverter::class)
 //    var genres: List<Genre>? = ArrayList(),
     @SerializedName("id")
@@ -32,6 +34,8 @@ data class MovieEntity(
     constructor(parcel: Parcel) : this(
         parcel.readDouble(),
         parcel.readLong(),
+        parcel.readLong(),
+        parcel.readLong(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -42,6 +46,8 @@ data class MovieEntity(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeDouble(budget)
+        parcel.writeLong(page)
+        parcel.writeLong(totalPages)
         parcel.writeLong(id)
         parcel.writeString(overview)
         parcel.writeString(posterPath)

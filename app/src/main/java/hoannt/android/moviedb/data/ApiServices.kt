@@ -7,11 +7,16 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiServices {
 
-    @GET("movie/popular?language=en-US&region=US&page=1")
-    fun getMoviesPopular(): Observable<MovieResponse>
+    @GET("movie/popular")
+    fun getMoviesPopular(
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int,
+        @Query("region") region: String = "US"
+    ): Observable<MovieResponse>
 
     @GET("/3/movie/{movie_id}")
     fun getMovieDetail(@Path("movie_id") movieId: String): Observable<MovieEntity>

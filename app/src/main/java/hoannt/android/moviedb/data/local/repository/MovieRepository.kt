@@ -19,6 +19,10 @@ class MovieRepository(
     fun loadMovieByType(): Observable<Resource<List<MovieEntity>>> {
         return object : NetworkBoundResource<List<MovieEntity>, MovieResponse>() {
             override fun saveCallResult(item: MovieResponse) {
+                for (entity: MovieEntity in item.results) {
+                    entity.page = item.page.toLong()
+                    entity.totalPages = item.totalPages.toLong()
+                }
                 movieDAO.insertMovies(item.results)
             }
 
@@ -27,16 +31,16 @@ class MovieRepository(
             }
 
             override fun loadFromDb(): Flowable<List<MovieEntity>> {
-                val movieEntity = movieDAO.getAllMovie()
-                return if (movieEntity == null || movieEntity.isEmpty()) {
+                val movieEntityList = movieDAO.getAllMovie()
+                return if (movieEntityList == null || movieEntityList.isEmpty()) {
                     Flowable.empty()
                 } else {
-                    Flowable.just(movieEntity)
+                    Flowable.just(movieEntityList)
                 }
             }
 
             override fun createCall(): Observable<Resource<MovieResponse>> {
-                return movieApiServices.getMoviesPopular()
+                return movieApiServices.getMoviesPopular(page = 1)
                     .flatMap { movieResponse ->
                         Observable.just(
                             if (movieResponse == null) Resource.error(
