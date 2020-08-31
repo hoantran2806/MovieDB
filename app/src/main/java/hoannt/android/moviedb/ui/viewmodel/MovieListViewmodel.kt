@@ -14,7 +14,7 @@ class MovieListViewmodel @Inject constructor(
     movieDAO: MovieDAO,
     apiServices: ApiServices
 ) : ViewModel() {
-    private val TAG = "movieViewModel_Minhlam"
+    private val TAG = "movieViewModel_MinhLam"
     private val movieRepository = MovieRepository(movieDAO, apiServices)
 
     private val movieListLiveData = MutableLiveData<Resource<List<MovieEntity>>>()

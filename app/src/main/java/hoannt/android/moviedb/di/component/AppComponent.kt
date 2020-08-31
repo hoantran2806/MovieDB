@@ -5,6 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
 import hoannt.android.moviedb.AppController
+import hoannt.android.moviedb.TestBroadcast
 import hoannt.android.moviedb.di.module.ActivityModule
 import hoannt.android.moviedb.di.module.ApiModule
 import hoannt.android.moviedb.di.module.DbModule
@@ -29,4 +30,6 @@ interface AppComponent {
     }
 
     fun inject(appController: AppController)
+
+    fun inject(broadcast: TestBroadcast)
 }

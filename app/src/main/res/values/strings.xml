@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MovieDB</string>
+    <string name="search_option">Search</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="movies">Movies</string>
+    <string name="tv">Tv</string>
 </resources>

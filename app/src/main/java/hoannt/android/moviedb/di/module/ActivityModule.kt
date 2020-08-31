@@ -7,6 +7,6 @@ import hoannt.android.moviedb.ui.MainActivity
 @Module
 abstract class ActivityModule {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [FragmentModule::class])
     abstract fun contributeMainActivity(): MainActivity
 }

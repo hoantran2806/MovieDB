@@ -15,10 +15,12 @@ class AppController : Application(), HasActivityInjector {
 
     override fun activityInjector(): AndroidInjector<Activity>? = dispatchingAndroidInjector
 
+    var daggerApplication = DaggerAppComponent.builder().application(this)
+        .build()
 
     override fun onCreate() {
         super.onCreate()
-        DaggerAppComponent.builder().application(this)
-            .build().inject(this)
+        daggerApplication.inject(this)
     }
+
 }

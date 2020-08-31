@@ -10,7 +10,10 @@ import hoannt.android.moviedb.R
 import hoannt.android.moviedb.data.local.entity.MovieEntity
 import kotlinx.android.synthetic.main.movie_item_layout.view.*
 
-class MovieListAdapter(private var movieList: List<MovieEntity>) :
+class MovieListAdapter(
+    private var movieList: List<MovieEntity>,
+    private val recyclerViewItemClick: RecyclerViewItemClick
+) :
     RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
 
 
@@ -38,10 +41,21 @@ class MovieListAdapter(private var movieList: List<MovieEntity>) :
 
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
         val movieEntity = movieList[position]
+        holder.itemView.setOnClickListener {
+            recyclerViewItemClick.onItemSelected(position)
+        }
         holder.bind(movieEntity)
     }
 
     fun setList(movieList: List<MovieEntity>) {
         this.movieList = movieList
+    }
+
+    fun getItem(position: Int): MovieEntity {
+        return movieList[position]
+    }
+
+    interface RecyclerViewItemClick {
+        fun onItemSelected(position: Int)
     }
 }
