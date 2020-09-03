@@ -79,11 +79,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         }
     }
 
-    override fun onDestroy() {
-        unregisterReceiver(TestBroadcast())
-        super.onDestroy()
-    }
-
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {
         return dispatchingAndroidInjector
     }

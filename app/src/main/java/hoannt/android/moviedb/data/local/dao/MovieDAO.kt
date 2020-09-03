@@ -16,8 +16,8 @@ interface MovieDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovies(list: List<MovieEntity>): LongArray
 
-    @Query("SELECT * FROM MovieEntity")
-    fun getAllMovie(): List<MovieEntity>
+    @Query("SELECT * FROM MovieEntity WHERE page = :page")
+    fun getMovieByPage(page: Long): List<MovieEntity>
 
     @Query("SELECT * FROM MovieEntity WHERE id = :id")
     fun getMovieById(id: Long): MovieEntity

@@ -14,7 +14,7 @@ interface ApiServices {
     @GET("movie/popular")
     fun getMoviesPopular(
         @Query("language") language: String = "en-US",
-        @Query("page") page: Int,
+        @Query("page") page: Long,
         @Query("region") region: String = "US"
     ): Observable<MovieResponse>
 

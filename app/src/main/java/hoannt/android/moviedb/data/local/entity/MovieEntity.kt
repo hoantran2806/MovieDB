@@ -61,6 +61,10 @@ data class MovieEntity(
         return 0
     }
 
+    fun isLastPage(): Boolean {
+        return page >= totalPages
+    }
+
     companion object CREATOR : Parcelable.Creator<MovieEntity> {
         override fun createFromParcel(parcel: Parcel): MovieEntity {
             return MovieEntity(parcel)

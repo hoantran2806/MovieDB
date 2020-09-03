@@ -19,11 +19,22 @@ class MovieListViewmodel @Inject constructor(
 
     private val movieListLiveData = MutableLiveData<Resource<List<MovieEntity>>>()
 
-    fun loadMoreMovie() {
-        movieRepository.loadMovieByType().subscribe { resource ->
+    fun loadMoreMovie(page: Long) {
+        movieRepository.loadMovieByType(page).subscribe { resource ->
             Log.i(TAG, "loadMoreMovie: ${resource.data?.get(0)}")
             getMovieLiveData().postValue(resource)
         }
+    }
+
+    fun isLastPage(): Boolean {
+        if (movieListLiveData.value != null) {
+            if (movieListLiveData.value?.data != null &&
+                !movieListLiveData.value?.data?.isEmpty()!!
+            ) {
+                return movieListLiveData.value?.data?.get(0)?.isLastPage()!!
+            }
+        }
+        return true
     }
 
     fun getMovieLiveData() = movieListLiveData
