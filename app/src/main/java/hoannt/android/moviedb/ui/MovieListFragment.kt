@@ -18,6 +18,7 @@ import hoannt.android.moviedb.R
 import hoannt.android.moviedb.data.local.entity.MovieEntity
 import hoannt.android.moviedb.ui.adapter.MovieListAdapter
 import hoannt.android.moviedb.ui.adapter.RecyclerViewPaginator
+import hoannt.android.moviedb.ui.customview.PagerSnapHelper
 import hoannt.android.moviedb.ui.viewmodel.MovieListViewmodel
 import hoannt.android.moviedb.ui.viewmodel.ShareMovieViewModel
 import kotlinx.android.synthetic.main.fragment_movie_list.view.*
@@ -90,6 +91,9 @@ class MovieListFragment : Fragment(), MovieListAdapter.RecyclerViewItemClick {
             LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         view.recycler_list_movie.adapter = movieListAdapter
         Log.i(TAG, "onViewCreated: movielistViewModel.getMovieLiveData()")
+
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(view.recycler_list_movie)
         view.recycler_list_movie.addOnScrollListener(object :
             RecyclerViewPaginator(view.recycler_list_movie) {
             override val isLastPage: Boolean
