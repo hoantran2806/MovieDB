@@ -1,5 +1,6 @@
 package hoannt.android.moviedb.data
 
+import android.util.Log
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import io.reactivex.Flowable
@@ -9,14 +10,16 @@ import io.reactivex.schedulers.Schedulers
 
 abstract class NetworkBoundResource<ResultType, RequestType> @MainThread
 protected constructor() {
-
+    private val TAG = "NetworkBound_TranHoan"
     private val asObservable: Observable<Resource<ResultType>>
 
     init {
         val source: Observable<Resource<ResultType>>
         if (shouldFetch()) {
+            Log.i(TAG, "1 - : shouldFetch() = true")
             source = createCall().subscribeOn(Schedulers.io())
                 .doOnNext {
+                    Log.i(TAG, "3 - : doOnNext")
                     saveCallResult(processResponse(it)!!)
                 }
                 .flatMap {
@@ -32,6 +35,7 @@ protected constructor() {
                     }
                 }.observeOn(AndroidSchedulers.mainThread())
         } else {
+            Log.i(TAG, ": shouldFetch() = false")
             source = loadFromDb().toObservable().map {
                 Resource.success(it)
             }
@@ -39,7 +43,10 @@ protected constructor() {
 
         asObservable = Observable.concat(
             loadFromDb().toObservable()
-                .map { Resource.loading(it) }
+                .map {
+                    Log.i(TAG, ": asObservable")
+                    Resource.loading(it)
+                }
                 .take(1), source
         )
     }
@@ -50,6 +57,7 @@ protected constructor() {
     }
 
     fun getAsObservable(): Observable<Resource<ResultType>> {
+        Log.i(TAG, "getAsObservable: call method getAsObservable")
         return asObservable
     }
 

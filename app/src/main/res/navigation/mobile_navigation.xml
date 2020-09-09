@@ -9,12 +9,23 @@
         android:id="@+id/destination_movie"
         android:name="hoannt.android.moviedb.ui.MovieListFragment"
         android:label="fragment_movie_list"
-        tools:layout="@layout/fragment_movie_list" />
+        tools:layout="@layout/fragment_movie_list">
+        <action
+            android:id="@+id/navToItemDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="hoannt.android.moviedb.ui.MovieDetailFragment"
         android:label="fragment_movie_detail"
-        tools:layout="@layout/fragment_movie_detail" />
+        tools:layout="@layout/fragment_movie_detail">
+        <action
+            android:id="@+id/action_movieDetailFragment"
+            app:popUpTo="@+id/destination_movie" />
+        <argument
+            android:name="uri"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/destination_tv"
         android:name="hoannt.android.moviedb.ui.TVListFragment"

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 abstract class RecyclerViewPaginator(private val recyclerView: RecyclerView) :
     RecyclerView.OnScrollListener() {
     private val TAG = "RecyclerPagi_MinhLam"
-    private var currentPage: Long = 1L
     private val thresHold = 2
     private var endWithAuto = false
 
@@ -17,10 +16,14 @@ abstract class RecyclerViewPaginator(private val recyclerView: RecyclerView) :
     abstract val isLastPage: Boolean
 
     init {
-        Log.i(TAG, ":Init currentPage = $currentPage")
         recyclerView.addOnScrollListener(this)
         this.layoutManager = recyclerView.layoutManager!!
-        loadFirst(currentPage)
+
+        if ((recyclerView.adapter as MovieListAdapter).getList().isNullOrEmpty()) {
+
+            loadFirst()
+        }
+
     }
 
     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -52,16 +55,16 @@ abstract class RecyclerViewPaginator(private val recyclerView: RecyclerView) :
                 var tempTotalCount = visibleItemCount + firstVisibleItemPosition + thresHold
                 Log.i(
                     TAG,
-                    "onScrollStateChanged: tempTotalCount = $tempTotalCount && totalItemCount = $totalItemCount && currentPage = $currentPage"
+                    "onScrollStateChanged: tempTotalCount = $tempTotalCount && totalItemCount = $totalItemCount "
                 )
                 if (!endWithAuto) {
                     Log.i(TAG, "onScrollStateChanged: if (!endWithAuto) endWithAuto = $endWithAuto")
                     endWithAuto = true
                     Log.i(TAG, "onScrollStateChanged: set endWithAuto value = $endWithAuto")
-                    loadMore(++currentPage)
+                    loadMore()
                     Log.i(
                         TAG,
-                        "onScrollStateChanged: call loadMore with currentPage = $currentPage"
+                        "onScrollStateChanged: call loadMore"
                     )
                 } else {
                     endWithAuto = false
@@ -70,6 +73,6 @@ abstract class RecyclerViewPaginator(private val recyclerView: RecyclerView) :
         }
     }
 
-    abstract fun loadFirst(page: Long)
-    abstract fun loadMore(page: Long)
+    abstract fun loadFirst()
+    abstract fun loadMore()
 }

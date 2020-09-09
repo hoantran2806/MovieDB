@@ -4,12 +4,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import hoannt.android.moviedb.AppConstants
 import hoannt.android.moviedb.R
 import hoannt.android.moviedb.data.local.entity.MovieEntity
-import kotlinx.android.synthetic.main.movie_item_layout.view.*
 
 class MovieListAdapter(
     private var movieList: MutableList<MovieEntity>,
@@ -21,12 +21,18 @@ class MovieListAdapter(
     private val VIEW_TYPE_LOADING = 1
 
     inner class MovieListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private var movieEntity: MovieEntity? = null
+        private val imageView: ImageView = itemView.findViewById(R.id.movie_image)
 
         fun bind(movieEntity: MovieEntity) {
-            this.movieEntity = movieEntity
-            Picasso.get().load(AppConstants.IMAGE_URL + movieEntity.posterPath)
-                .into(itemView.movie_image)
+//            this.movieEntity = movieEntity
+            imageView.apply {
+                transitionName = movieEntity.posterPath
+                Picasso.get().load(AppConstants.IMAGE_URL + movieEntity.posterPath)
+                    .into(this)
+            }
+            itemView.setOnClickListener {
+                recyclerViewItemClick.onItemSelected(movieEntity, imageView)
+            }
 //            itemView.movie_title.text = movieEntity.title
         }
     }
@@ -60,9 +66,9 @@ class MovieListAdapter(
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
 //        if (holder is MovieListViewHolder){
         val movieEntity = movieList[position]
-        holder.itemView.setOnClickListener {
-            recyclerViewItemClick.onItemSelected(position)
-        }
+//        holder.itemView.setOnClickListener {
+//            recyclerViewItemClick.onItemSelected(position)
+//        }
         holder.bind(movieEntity)
 //        }
 //        else if (holder is LoadingViewHolder){
@@ -90,17 +96,17 @@ class MovieListAdapter(
         return movieList[position]
     }
 
-//    override fun getItemViewType(position: Int): Int {
+
+    inner class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+    interface RecyclerViewItemClick {
+        fun onItemSelected(movieEntity: MovieEntity, imageView: ImageView)
+    }
+    //    override fun getItemViewType(position: Int): Int {
 //        if (position == movieList.size){
 //            return VIEW_TYPE_LOADING
 //        } else{
 //            return VIEW_TYPE_ITEM
 //        }
 //    }
-
-    inner class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
-    interface RecyclerViewItemClick {
-        fun onItemSelected(position: Int)
-    }
 }
