@@ -1,37 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MovieDetailFragment"
     android:orientation="vertical"
-    android:weightSum="10">
+    tools:context=".ui.detail.MovieDetailFragment">
 
-    <ImageView
-        android:scaleType="fitCenter"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        android:id="@+id/movie_image"
-        android:transitionName="movie_image" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/movie_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TEST"
-        android:singleLine="true"
-        android:gravity="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/rootView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/frag_detail_margin_5dp">
 
-    <TextView
-        android:id="@+id/movie_overview"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:text="Test OverView"
-        android:gravity="top|left"
-        android:padding="5dp" />
+            <ImageView
+                android:id="@+id/movie_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:transitionName="movie_image"
+                app:layout_constraintDimensionRatio="H,16:8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/movie_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/frag_detail_margin_10dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="TEST"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/movie_image" />
 
+            <TextView
+                android:id="@+id/tv_movie_release"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/frag_detail_margin_10dp"
+                android:layout_marginStart="@dimen/frag_detail_margin_10dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textStyle="bold"
+                android:text="@string/release_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/movie_title" />
+
+            <TextView
+                android:id="@+id/movie_release"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/frag_detail_margin_10dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="TEST"
+                android:layout_marginStart="@dimen/frag_detail_margin_5dp"
+                app:layout_constraintStart_toEndOf="@id/tv_movie_release"
+                app:layout_constraintTop_toBottomOf="@id/movie_title" />
+
+            <TextView
+                android:id="@+id/tv_movie_overview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/frag_detail_margin_10dp"
+                android:layout_marginStart="@dimen/frag_detail_margin_10dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textStyle="bold"
+                android:text="@string/overview"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_movie_release" />
+
+            <TextView
+                android:id="@+id/movie_overview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="top|start"
+                android:layout_marginTop="@dimen/frag_detail_margin_10dp"
+                android:paddingStart="@dimen/frag_detail_margin_5dp"
+                android:paddingEnd="@dimen/frag_detail_margin_5dp"
+                android:text="Test OverView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_movie_overview"
+                app:layout_constraintTop_toBottomOf="@id/movie_release" />
+
+            <include
+                android:id="@+id/include_list_cast_layout"
+                layout="@layout/layout_list_cast_end_crew"
+                android:layout_marginTop="@dimen/frag_detail_margin_10dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/movie_overview" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

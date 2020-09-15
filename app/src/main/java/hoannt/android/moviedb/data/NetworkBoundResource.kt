@@ -17,17 +17,18 @@ protected constructor() {
         val source: Observable<Resource<ResultType>>
         if (shouldFetch()) {
             Log.i(TAG, "1 - : shouldFetch() = true")
-            source = createCall().subscribeOn(Schedulers.io())
-                .doOnNext {
-                    Log.i(TAG, "3 - : doOnNext")
-                    saveCallResult(processResponse(it)!!)
-                }
-                .flatMap {
-                    loadFromDb().toObservable()
-                        .map { Resource.success(it) }
-                }
-                .doOnError {
-                    onFetchFail()
+            source =
+                createCall().subscribeOn(Schedulers.io())
+                    .doOnNext {
+                        Log.i(TAG, "3 - : doOnNext")
+                        saveCallResult(processResponse(it)!!)
+                    }
+                    .flatMap {
+                        loadFromDb().toObservable()
+                            .map { Resource.success(it) }
+                    }
+                    .doOnError {
+                        onFetchFail()
                 }
                 .onErrorResumeNext { t: Throwable ->
                     loadFromDb().toObservable().map {

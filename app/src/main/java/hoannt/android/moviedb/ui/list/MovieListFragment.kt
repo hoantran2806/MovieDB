@@ -1,4 +1,4 @@
-package hoannt.android.moviedb.ui
+package hoannt.android.moviedb.ui.list
 
 import android.os.Bundle
 import android.util.Log
@@ -16,11 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.support.AndroidSupportInjection
 import hoannt.android.moviedb.R
 import hoannt.android.moviedb.data.local.entity.MovieEntity
-import hoannt.android.moviedb.ui.adapter.MovieListAdapter
-import hoannt.android.moviedb.ui.adapter.RecyclerViewPaginator
-import hoannt.android.moviedb.ui.customview.PagerSnapHelper
-import hoannt.android.moviedb.ui.viewmodel.MovieListViewmodel
-import hoannt.android.moviedb.ui.viewmodel.ShareMovieViewModel
+import hoannt.android.moviedb.ui.base.customview.PagerSnapHelper
+import hoannt.android.moviedb.ui.list.adapter.MovieListAdapter
+import hoannt.android.moviedb.ui.list.adapter.RecyclerViewPaginator
+import hoannt.android.moviedb.ui.list.viewmodel.MovieListViewmodel
+import hoannt.android.moviedb.ui.list.viewmodel.ShareMovieViewModel
 import kotlinx.android.synthetic.main.fragment_movie_list.view.*
 import kotlinx.android.synthetic.main.movie_item_layout.*
 import javax.inject.Inject
@@ -41,7 +41,7 @@ class MovieListFragment : Fragment(), MovieListAdapter.RecyclerViewItemClick {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidSupportInjection.inject(this)
-
+        setHasOptionsMenu(true)
         movieListAdapter = MovieListAdapter(mutableListOf(), this)
         movielistViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(MovieListViewmodel::class.java)
@@ -81,7 +81,9 @@ class MovieListFragment : Fragment(), MovieListAdapter.RecyclerViewItemClick {
         val extras = FragmentNavigatorExtras(movie_image to movieEntity.posterPath!!)
         selectedMovieViewModel.select(movieEntity)
         val action =
-            MovieListFragmentDirections.navToItemDetailFragment(uri = movieEntity.posterPath!!)
+            MovieListFragmentDirections.navToItemDetailFragment(
+                uri = movieEntity.posterPath!!
+            )
         findNavController().navigate(action, extras)
     }
 

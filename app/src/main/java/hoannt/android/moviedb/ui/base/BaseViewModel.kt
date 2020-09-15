@@ -1,4 +1,4 @@
-package hoannt.android.moviedb.ui
+package hoannt.android.moviedb.ui.base
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable

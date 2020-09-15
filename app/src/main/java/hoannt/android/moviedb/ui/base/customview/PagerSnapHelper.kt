@@ -1,4 +1,4 @@
-package hoannt.android.moviedb.ui.customview
+package hoannt.android.moviedb.ui.base.customview
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager

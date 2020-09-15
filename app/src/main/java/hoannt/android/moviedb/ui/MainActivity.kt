@@ -14,8 +14,8 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import hoannt.android.moviedb.R
 import hoannt.android.moviedb.TestBroadcast
-import hoannt.android.moviedb.ui.adapter.MovieListAdapter
-import hoannt.android.moviedb.ui.viewmodel.MovieListViewmodel
+import hoannt.android.moviedb.ui.list.adapter.MovieListAdapter
+import hoannt.android.moviedb.ui.list.viewmodel.MovieListViewmodel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import javax.inject.Inject

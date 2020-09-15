@@ -1,12 +1,13 @@
-package hoannt.android.moviedb.ui.viewmodel
+package hoannt.android.moviedb.ui.list.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import hoannt.android.moviedb.data.ApiServices
 import hoannt.android.moviedb.data.Resource
 import hoannt.android.moviedb.data.local.dao.MovieDAO
 import hoannt.android.moviedb.data.local.entity.MovieEntity
 import hoannt.android.moviedb.data.local.repository.MovieRepository
-import hoannt.android.moviedb.ui.BaseViewModel
+import hoannt.android.moviedb.ui.base.BaseViewModel
 import javax.inject.Inject
 
 class MovieListViewmodel @Inject constructor(
@@ -24,7 +25,7 @@ class MovieListViewmodel @Inject constructor(
                 addToDisposable(it)
             }
             .subscribe { resource ->
-//            Log.i(TAG, "loadMoreMovie: ${resource.data?.get(0)}")
+                Log.i(TAG, "loadMoreMovie: ${resource.data?.get(0)}")
                 getMovieLiveData().postValue(resource)
             }
     }

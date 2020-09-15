@@ -1,4 +1,4 @@
-package hoannt.android.moviedb.ui.adapter
+package hoannt.android.moviedb.ui.list.adapter
 
 import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager

@@ -1,9 +1,6 @@
 package hoannt.android.moviedb.data.local.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import hoannt.android.moviedb.data.local.entity.MovieEntity
 import io.reactivex.Flowable
 
@@ -15,6 +12,9 @@ interface MovieDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertMovies(list: List<MovieEntity>): LongArray
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun updateMovie(movie: MovieEntity): Int
 
     @Query("SELECT * FROM MovieEntity WHERE page = :page")
     fun getMovieByPage(page: Long): List<MovieEntity>

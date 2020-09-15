@@ -1,4 +1,4 @@
-package hoannt.android.moviedb.ui.viewmodel
+package hoannt.android.moviedb.ui.list.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

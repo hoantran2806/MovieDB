@@ -9,6 +9,7 @@ import hoannt.android.moviedb.data.local.entity.MovieEntity
 import hoannt.android.moviedb.data.network.model.MovieResponse
 import io.reactivex.Flowable
 import io.reactivex.Observable
+import io.reactivex.functions.Function4
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,6 +28,7 @@ class MovieRepository @Inject constructor(
                 for (entity: MovieEntity in item.results) {
                     entity.page = item.page.toLong()
                     entity.totalPages = item.totalPages.toLong()
+//                    entity.genres= arrayListOf(Genre(24,"dasda"), Genre(24,"dasda"));
                     movieEntities.add(entity)
                 }
 
@@ -65,6 +67,72 @@ class MovieRepository @Inject constructor(
                         )
                     }
             }
+        }.getAsObservable()
+    }
+
+    fun loadMovieDetail(id: Long): Observable<Resource<MovieEntity>> {
+        return object : NetworkBoundResource<MovieEntity, MovieEntity>() {
+            override fun saveCallResult(item: MovieEntity) {
+                val movieEntity = movieDAO.getMovieById(id)
+                if (movieEntity == null) {
+                    movieDAO.insertMovie(item)
+                } else {
+                    item.page = movieEntity.page
+                    item.totalPages = movieEntity.totalPages
+                    movieDAO.updateMovie(item)
+                }
+            }
+
+            override fun shouldFetch(): Boolean {
+                return true
+            }
+
+            override fun loadFromDb(): Flowable<MovieEntity> {
+                val movieEntity = movieDAO.getMovieById(id)
+                if (movieEntity == null) {
+                    return Flowable.empty()
+                } else {
+                    return Flowable.just(movieEntity)
+                }
+            }
+
+            override fun createCall(): Observable<Resource<MovieEntity>> {
+                val movieId = id.toString()
+                return Observable.combineLatest(
+                    movieApiServices.getMovieDetail(movieId),
+                    movieApiServices.getMovieCredits(movieId),
+                    movieApiServices.getSimilarMovies(movieId),
+                    movieApiServices.getMovieVideos(movieId),
+                    Function4 { movieEntity,
+                                creditResponse,
+                                similarMovieResponse,
+                                videosResponse ->
+                        if (creditResponse != null) {
+                            Log.i(
+                                "loadMovieDetail",
+                                "createCall: creditResponse = ${creditResponse.cast.size}"
+                            )
+                            movieEntity.cast = creditResponse.cast
+                            movieEntity.crew = creditResponse.crew
+                        }
+                        if (similarMovieResponse != null) {
+                            Log.i(
+                                "loadMovieDetail",
+                                "createCall: similarMovieResponse = ${similarMovieResponse.results[0]}"
+                            )
+                            movieEntity.similarMovie = similarMovieResponse.results
+                        }
+                        if (videosResponse != null) {
+                            Log.i(
+                                "loadMovieDetail",
+                                "createCall: videosResponse = ${videosResponse.results.toString()}"
+                            )
+                            movieEntity.video = videosResponse.results
+                        }
+                        Resource.success(movieEntity)
+                    })
+            }
+
         }.getAsObservable()
     }
 }

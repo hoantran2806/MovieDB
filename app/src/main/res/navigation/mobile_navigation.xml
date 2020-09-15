@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/destination_movie"
-        android:name="hoannt.android.moviedb.ui.MovieListFragment"
+        android:name="hoannt.android.moviedb.ui.list.MovieListFragment"
         android:label="fragment_movie_list"
         tools:layout="@layout/fragment_movie_list">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/movieDetailFragment"
-        android:name="hoannt.android.moviedb.ui.MovieDetailFragment"
+        android:name="hoannt.android.moviedb.ui.detail.MovieDetailFragment"
         android:label="fragment_movie_detail"
         tools:layout="@layout/fragment_movie_detail">
         <action
