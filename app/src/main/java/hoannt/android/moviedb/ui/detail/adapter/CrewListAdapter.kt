@@ -19,7 +19,8 @@ class CrewListAdapter(private var crewList: MutableList<Crew>) :
         private val crewName: TextView = view.findViewById(R.id.tv_crew_name)
 
         fun bind(crew: Crew) {
-            Picasso.get().load(AppConstants.IMAGE_URL + crew.profilePath).into(crewImage)
+            Picasso.get().load(AppConstants.IMAGE_URL + crew.profilePath)
+                .error(R.drawable.ic_baseline_error_24).into(crewImage)
             crewName.text = crew.name
         }
     }

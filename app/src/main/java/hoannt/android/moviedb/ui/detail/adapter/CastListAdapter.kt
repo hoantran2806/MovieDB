@@ -11,15 +11,16 @@ import hoannt.android.moviedb.AppConstants
 import hoannt.android.moviedb.R
 import hoannt.android.moviedb.data.network.model.credit.Cast
 
-class CastListAdapter(private var castList: MutableList<Cast>) :
+class CastListAdapter(private var castList: List<Cast>) :
     RecyclerView.Adapter<CastListAdapter.CastViewHolder>() {
 
     class CastViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val castImage = view.findViewById<ImageView>(R.id.cast_image)
-        val castName = view.findViewById<TextView>(R.id.tv_cast_name)
+        private val castImage = view.findViewById<ImageView>(R.id.cast_image)
+        private val castName = view.findViewById<TextView>(R.id.tv_cast_name)
 
         fun bind(cast: Cast) {
-            Picasso.get().load(AppConstants.IMAGE_URL + cast.profilePath).into(castImage)
+            Picasso.get().load(AppConstants.IMAGE_URL + cast.profilePath)
+                .into(castImage)
             castName.text = cast.name
         }
     }
@@ -44,14 +45,14 @@ class CastListAdapter(private var castList: MutableList<Cast>) :
         holder.bind(cast)
     }
 
-    fun setList(castList: List<Cast>) {
-        if (this.castList.isNullOrEmpty()) {
-            this.castList.addAll(castList)
-            notifyDataSetChanged()
-        }
-//        this.castList = castList
-//        notifyDataSetChanged()
-    }
+//    fun setList(castList: List<Cast>) {
+//        if (this.castList.isNullOrEmpty()) {
+//            this.castList.addAll(castList)
+//            notifyDataSetChanged()
+//        }
+////        this.castList = castList
+////        notifyDataSetChanged()
+//    }
 
     fun getList(): List<Cast> {
         return castList

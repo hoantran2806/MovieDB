@@ -10,8 +10,12 @@ import hoannt.android.moviedb.AppConstants
 import hoannt.android.moviedb.R
 import hoannt.android.moviedb.data.local.entity.MovieEntity
 
-class SimilarMovieListAdapter(private var similarMovieList: MutableList<MovieEntity>) :
+class SimilarMovieListAdapter(
+    private var similarMovieList: MutableList<MovieEntity>,
+    private var onClickDetailSimilarMovie: OnClickDetailSimilarMovie
+) :
     RecyclerView.Adapter<SimilarMovieListAdapter.SimilarViewHolder>() {
+
 
     class SimilarViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView = view.findViewById<ImageView>(R.id.similar_movie_preview)
@@ -38,6 +42,9 @@ class SimilarMovieListAdapter(private var similarMovieList: MutableList<MovieEnt
 
     override fun onBindViewHolder(holder: SimilarViewHolder, position: Int) {
         val similarMovie = similarMovieList[position]
+        holder.imageView.setOnClickListener {
+            onClickDetailSimilarMovie.onDetailClick(position)
+        }
         holder.bind(similarMovie)
     }
 
@@ -55,5 +62,9 @@ class SimilarMovieListAdapter(private var similarMovieList: MutableList<MovieEnt
 
     fun getSimilarMovieDetail(position: Int): MovieEntity {
         return similarMovieList[position]
+    }
+
+    interface OnClickDetailSimilarMovie {
+        fun onDetailClick(position: Int)
     }
 }

@@ -22,6 +22,7 @@
         <action
             android:id="@+id/action_movieDetailFragment"
             app:popUpTo="@+id/destination_movie" />
+
         <argument
             android:name="uri"
             app:argType="string" />

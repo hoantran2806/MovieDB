@@ -107,26 +107,26 @@ class MovieRepository @Inject constructor(
                                 creditResponse,
                                 similarMovieResponse,
                                 videosResponse ->
-                        if (creditResponse != null) {
-                            Log.i(
-                                "loadMovieDetail",
-                                "createCall: creditResponse = ${creditResponse.cast.size}"
-                            )
+                        if (creditResponse != null && creditResponse.cast.isNotEmpty() && creditResponse.crew.isNotEmpty()) {
+//                            Log.i(
+//                                "loadMovieDetail",
+//                                "createCall: creditResponse = ${creditResponse.cast.size}"
+//                            )
                             movieEntity.cast = creditResponse.cast
                             movieEntity.crew = creditResponse.crew
                         }
-                        if (similarMovieResponse != null) {
-                            Log.i(
-                                "loadMovieDetail",
-                                "createCall: similarMovieResponse = ${similarMovieResponse.results[0]}"
-                            )
+                        if (similarMovieResponse != null && similarMovieResponse.results.isNotEmpty()) {
+//                            Log.i(
+//                                "loadMovieDetail",
+//                                "createCall: similarMovieResponse = ${similarMovieResponse.results[0]}"
+//                            )
                             movieEntity.similarMovie = similarMovieResponse.results
                         }
-                        if (videosResponse != null) {
-                            Log.i(
-                                "loadMovieDetail",
-                                "createCall: videosResponse = ${videosResponse.results.toString()}"
-                            )
+                        if (videosResponse != null && videosResponse.results!!.isNotEmpty()) {
+//                            Log.i(
+//                                "loadMovieDetail",
+//                                "createCall: videosResponse = ${videosResponse.results.toString()}"
+//                            )
                             movieEntity.video = videosResponse.results
                         }
                         Resource.success(movieEntity)

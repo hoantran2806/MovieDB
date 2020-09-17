@@ -1,6 +1,7 @@
 package hoannt.android.moviedb.ui.detail.viewmodel
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import hoannt.android.moviedb.data.ApiServices
 import hoannt.android.moviedb.data.local.dao.MovieDAO
@@ -26,10 +27,25 @@ class MovieDetailViewModel @Inject constructor(
         movieRepository.loadMovieDetail(movieEntity.id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { resouce ->
+            .doOnSubscribe {
+                addToDisposable(it)
+            }
+            .subscribe({ resouce ->
                 if (resouce.isLoaded) {
+                    Log.i(TAG, "fetchMoreDetail: resouce.isLoaded = true")
                     movieDetailLivaData.postValue(resouce.data)
                 }
-            }
+                if (resouce.isSuccess) {
+                    Log.i(TAG, "fetchMoreDetail: resouce.isSuccess = true")
+                }
+                if (resouce.isLoading) {
+                    Log.i(TAG, "fetchMoreDetail: resouce.isLoading = true")
+                }
+                if (resouce.isError) {
+                    Log.i(TAG, "fetchMoreDetail: resouce.error = true")
+                }
+            }, { ex ->
+                Log.i(TAG, "fetchMoreDetail: Throw exception: ${ex.message}")
+            })
     }
 }

@@ -80,6 +80,7 @@ class MovieListFragment : Fragment(), MovieListAdapter.RecyclerViewItemClick {
         movielistViewModel.onViewModelStop()
         val extras = FragmentNavigatorExtras(movie_image to movieEntity.posterPath!!)
         selectedMovieViewModel.select(movieEntity)
+
         val action =
             MovieListFragmentDirections.navToItemDetailFragment(
                 uri = movieEntity.posterPath!!

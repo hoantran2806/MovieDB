@@ -11,6 +11,9 @@ class Resource<T> private constructor(val status: Status, val data: T?, val mess
     val isLoaded: Boolean
         get() = status != Status.LOADING
 
+    val isError: Boolean
+        get() = status != Status.ERROR
+
     companion object {
         fun <T> success(data: T): Resource<T> {
             return Resource(Status.SUCCESS, data, null)
