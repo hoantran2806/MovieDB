@@ -9,6 +9,7 @@ import hoannt.android.moviedb.data.local.entity.MovieEntity
 import hoannt.android.moviedb.data.network.model.MovieResponse
 import io.reactivex.Flowable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.functions.Function4
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -134,5 +135,17 @@ class MovieRepository @Inject constructor(
             }
 
         }.getAsObservable()
+    }
+
+    fun searchMovieAndTv(query: String, page: Long): Single<Resource<List<MovieEntity>>> {
+        return movieApiServices.search(query = query, page = page).flatMap { movieResponse ->
+            Single.just<Resource<List<MovieEntity>>>(
+                if (movieResponse.results.isNullOrEmpty()) {
+                    Resource.error("ERROR", emptyList())
+                } else {
+                    Resource.success(movieResponse.results)
+                }
+            )
+        }
     }
 }

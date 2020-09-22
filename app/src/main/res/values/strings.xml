@@ -10,4 +10,6 @@
     <string name="cast">CAST</string>
     <string name="crew">CREW</string>
     <string name="similar_movie">Similar Movie</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Type your search here</string>
 </resources>

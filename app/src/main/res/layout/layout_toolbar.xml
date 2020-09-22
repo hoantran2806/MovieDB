@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:contentInsetLeft="0dp"
+    android:background="@color/bg_activity_detail"
     app:contentInsetStart="0dp"
     android:minHeight="?attr/actionBarSize">
 
@@ -12,41 +13,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/bg_activity_detail">
+        android:foregroundGravity="center">
 
         <RadioGroup
+            android:id="@+id/radio_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/radio_group"
             android:orientation="horizontal"
             android:padding="@dimen/margin"
-            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/btn_movie"
+                style="@style/RadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btn_movie"
                 android:layout_marginEnd="@dimen/margin"
-                style="@style/RadioButton"
-                android:checked="true"
-                android:button="@drawable/ic_movie_selector" />
+                android:button="@drawable/ic_movie_selector"
+                android:checked="true" />
 
             <View
-                android:padding="@dimen/margin_small"
                 android:layout_width="0.8sp"
                 android:layout_height="30dp"
-                android:background="@android:color/white" />
+                android:background="@android:color/white"
+                android:padding="@dimen/margin_small" />
 
             <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/btn_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btn_tv"
-                android:checked="false"
+                android:layout_marginStart="@dimen/margin"
                 android:button="@drawable/ic_tv_selector"
-                android:layout_marginStart="@dimen/margin" />
+                android:checked="false" />
 
         </RadioGroup>
 
@@ -54,6 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_search"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

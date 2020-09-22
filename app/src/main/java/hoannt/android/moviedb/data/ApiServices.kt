@@ -37,4 +37,13 @@ interface ApiServices {
 
     @GET("movie/{movie_id}/videos")
     fun getMovieVideos(@Path("movie_id") movieId: String): Observable<VideoResponse>
+
+    @GET("search/multi")
+    fun search(
+        @Query("language") language: String = "en-US",
+        @Query("query") query: String,
+        @Query("page") page: Long = 1L,
+        @Query("include_adult") includeAdult: Boolean = true,
+        @Query("region") region: String? = null
+    ): Single<MovieResponse>
 }

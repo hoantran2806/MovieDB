@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import hoannt.android.moviedb.ui.detail.MovieDetailFragment
 import hoannt.android.moviedb.ui.list.MovieListFragment
+import hoannt.android.moviedb.ui.search.SearchFragment
 
 @Module
 abstract class FragmentModule {
@@ -13,4 +14,7 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeMovieDetailFragment(): MovieDetailFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeSearchFragment(): SearchFragment
 }

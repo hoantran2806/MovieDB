@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/destination_movie"
         android:title="@string/movies"
-        android:icon="@drawable/ic_movie_selector" />
+        android:icon="@drawable/ic_gray_movie_24"
+        app:showAsAction="never" />
     <item
         android:id="@+id/destination_tv"
         android:title="@string/tv"
-        android:icon="@drawable/ic_tv_selector" />
+        android:icon="@drawable/ic_tv_selector"
+        app:showAsAction="never" />
 </menu>

@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import hoannt.android.moviedb.ui.detail.viewmodel.MovieDetailViewModel
 import hoannt.android.moviedb.ui.list.viewmodel.MovieListViewmodel
+import hoannt.android.moviedb.ui.search.viewmodel.SearchListViewModel
 
 @Module
 internal abstract class ViewModelModule {
@@ -23,5 +24,10 @@ internal abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MovieDetailViewModel::class)
     protected abstract fun movieDetailViewModel(movieDetailViewModel: MovieDetailViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchListViewModel::class)
+    protected abstract fun searchListViewModel(searchListViewModel: SearchListViewModel): ViewModel
 
 }

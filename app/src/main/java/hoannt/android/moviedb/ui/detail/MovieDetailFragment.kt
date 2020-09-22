@@ -5,7 +5,6 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -49,13 +48,16 @@ class MovieDetailFragment : Fragment(), SimilarMovieListAdapter.OnClickDetailSim
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_movie_detail, container, false)
+//        (activity as MainActivity).toolbar.visibility = View.GONE
+
         return view
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidSupportInjection.inject(this)
-//        (activity as MainActivity).toolbar.visibility = View.INVISIBLE
+
+
 //        castListAdapter = CastListAdapter(mutableListOf())
 //        crewListAdapter = CrewListAdapter(mutableListOf())
 //        similarMovieListAdapter = SimilarMovieListAdapter(mutableListOf())
@@ -64,31 +66,19 @@ class MovieDetailFragment : Fragment(), SimilarMovieListAdapter.OnClickDetailSim
         detailViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(MovieDetailViewModel::class.java)
 
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().popBackStack(R.id.destination_movie, false)
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callback)
+//        val callback = object : OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                if (findNavController().backStack.isEmpty()){
+//
+//                }
+//                findNavController().popBackStack(R.id.destination_movie, false)
+//            }
+//        }
+//        requireActivity().onBackPressedDispatcher.addCallback(callback)
         sharedMovieViewModel =
             ViewModelProvider(requireActivity()).get(ShareMovieViewModel::class.java)
         movieEntity = sharedMovieViewModel.selected.value!!
         detailViewModel.fetchMoreDetail(movieEntity)
-//        detailViewModel.getDetailMovie().observe(this, Observer { movieEntity ->
-//            if (movieEntity != null) {
-//                if (!movieEntity.cast.isNullOrEmpty()) {
-//                    castListAdapter.setList(movieEntity.cast!!)
-//                }
-//
-//                if (!movieEntity.crew.isNullOrEmpty()) {
-//                    crewListAdapter.setList(movieEntity.crew!!)
-//                }
-//
-//                if (!movieEntity.similarMovie.isNullOrEmpty()) {
-//                    similarMovieListAdapter.setList(movieEntity.similarMovie!!)
-//                }
-//            }
-//        })
     }
 
 

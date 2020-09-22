@@ -1,11 +1,12 @@
 package hoannt.android.moviedb.ui
 
-import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import dagger.android.AndroidInjection
@@ -13,7 +14,6 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import hoannt.android.moviedb.R
-import hoannt.android.moviedb.TestBroadcast
 import hoannt.android.moviedb.ui.list.adapter.MovieListAdapter
 import hoannt.android.moviedb.ui.list.viewmodel.MovieListViewmodel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,15 +32,45 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
-
+        var toolbar: Toolbar = findViewById(R.id.include_layout)
+        toolbar.inflateMenu(R.menu.search_menu)
         val navControllver = Navigation.findNavController(this, R.id.my_nav_host_fragment)
+        toolbar.setOnMenuItemClickListener { item ->
+            when (item?.itemId) {
+                R.id.search_menu_action -> {
+                    navControllver.navigate(R.id.searchFragment)
+                    true
+                }
+                else -> false
+            }
+        }
+
+
+//        toolbar.visibility = View.GONE
+//        setSupportActionBar(toolbar)
+
+
         setUpBottomNavMenu(navControllver)
         btn_search.setOnClickListener {
             navControllver.navigate(R.id.movieDetailFragment)
         }
+        navControllver.addOnDestinationChangedListener(object :
+            NavController.OnDestinationChangedListener {
+            override fun onDestinationChanged(
+                controller: NavController,
+                destination: NavDestination,
+                arguments: Bundle?
+            ) {
+                if (destination.id == R.id.movieDetailFragment || destination.id == R.id.searchFragment) {
+                    toolbar.visibility = View.GONE
+                    guideline.setGuidelinePercent(0.0f)
+                } else {
+                    toolbar.visibility = View.VISIBLE
+                    guideline.setGuidelinePercent(0.1f)
+                }
+            }
 
-        registerReceiver(TestBroadcast(), IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED))
+        })
 
 //        recyclerView.layoutManager =
 //            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -82,5 +112,4 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {
         return dispatchingAndroidInjector
     }
-
 }
