@@ -46,10 +46,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         }
 
 
-        toolbar.visibility = View.GONE
-        setSupportActionBar(toolbar)
-
-
         setUpBottomNavMenu(navControllver)
         btn_search.setOnClickListener {
             navControllver.navigate(R.id.movieDetailFragment)
