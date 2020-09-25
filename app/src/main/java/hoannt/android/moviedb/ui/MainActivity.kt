@@ -17,7 +17,6 @@ import hoannt.android.moviedb.R
 import hoannt.android.moviedb.ui.list.adapter.MovieListAdapter
 import hoannt.android.moviedb.ui.list.viewmodel.MovieListViewmodel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.layout_toolbar.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
@@ -47,13 +46,13 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
 
         toolbar.visibility = View.GONE
-        setSupportActionBar(toolbar)
+//        setSupportActionBar(toolbar)
 
 
-        setUpBottomNavMenu(navControllver)
-        btn_search.setOnClickListener {
-            navControllver.navigate(R.id.movieDetailFragment)
-        }
+//        setUpBottomNavMenu(navControllver)
+//        btn_search.setOnClickListener {
+//            navControllver.navigate(R.id.movieDetailFragment)
+//        }
         navControllver.addOnDestinationChangedListener(object :
             NavController.OnDestinationChangedListener {
             override fun onDestinationChanged(
