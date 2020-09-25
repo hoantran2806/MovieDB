@@ -8,7 +8,7 @@
     android:padding="10dp">
 
 
-    <EditText
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/edt_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
