@@ -46,8 +46,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         }
 
 
-//        toolbar.visibility = View.GONE
-//        setSupportActionBar(toolbar)
+        toolbar.visibility = View.GONE
+        setSupportActionBar(toolbar)
 
 
         setUpBottomNavMenu(navControllver)
